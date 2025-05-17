@@ -74,3 +74,9 @@ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | 
     - `Project Name`: default
     - `Sync Policy`: manual
     - `Sync Options`: `auto create namespace` and `apply out of sync only`
+    - `Repository URL`: `https://github.com/P-Y-R-O-B-O-T/argocdtest`
+    - `Revision`: `main`
+    - `Path`: `helm-chart`
+    - `Cluster URL`: `https://kubernetes.default.svc`
+    - `Namespace`: `default`
+3. Create app and then refresh the app or sync the app
