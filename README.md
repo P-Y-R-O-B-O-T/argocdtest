@@ -80,3 +80,6 @@ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | 
     - `Cluster URL`: `https://kubernetes.default.svc`
     - `Namespace`: `default`
 3. Create app and then refresh the app or sync the app
+
+## Result Images
+![ArgoCD](/zzz/argo.png) 
