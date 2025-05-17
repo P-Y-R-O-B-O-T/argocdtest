@@ -42,6 +42,11 @@ sudo cp ./kubectl /usr/bin/kubectl
 sudo rm kubectl
 ```
 
+## Create Secret 
+```bash
+sudo kubectl create secret secret.yaml
+```
+
 ## Install ArgoCD
 ```bash
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -80,6 +85,25 @@ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | 
     - `Cluster URL`: `https://kubernetes.default.svc`
     - `Namespace`: `default`
 3. Create app and then refresh the app or sync the app
+
+
+# Problems Faced and Solutions
+## Problems
+
+> [!NOTE]
+> * The image uses an intentional fork bomb inside the container which is triggered by the `/counter` endpoint
+> * **SOLUTION:** Setting resource requests and limits for both ram and cpu
+
+> [!NOTE]
+> * The service was becoming unavailable during the pod downtime
+> * **SOLUTION:** Create N replicas, I chose 5
+
+> [!NOTE]
+> * The counter resets and does not behave in continuing manner if the pods get destroyed if the resource limit is exceeded
+> * **SOLUTION:** It can be solved if the containers use an backend decoupled storage like redis to maintain consistency in counts across all the container replicas
+
+> [!IMPORTANT]
+> I did not create ingress as creating ingress was of no point on a local system and test cluster, Its always better to create ingress using a trusted ssl/tls provider, still if one does not have that, one can create ingress to create local certificates using the ingress controller itself
 
 ## Result Images
 ![ArgoCD](/zzz/argo.png) 
