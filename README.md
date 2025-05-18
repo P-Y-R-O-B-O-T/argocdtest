@@ -55,14 +55,14 @@ helm install my-argo-cd argo/argo-cd --version 8.0.3 -f argocd-values.yaml
 
 ## Creating ArgoCD Deployment
 
-* Create the `NodePort` service by patching the existing one
+* Create the `NodePort` service for `my-argo-cd-argocd-server` by patching the existing one
 ```bash
-kubectl patch service my-argo-cd-argocd-server -p '{"spec":{"type": "LoadBalancer"}}'
+kubectl patch service my-argo-cd-argocd-server -p '{"spec":{"type": "LoadBalancer", "ports": {"port": 30304}}}'
 ```
 
-* Now do run `kubectl get svc` and seek for the service and see which ports it is on running, the range is 30000-32767 and create a `port-forward`
+* Now do run `kubectl get svc` and seek for the service and see which port (NODE-PORT, it must be `30304`, we have patched it) it is on running, the range is 30000-32767 and create a `port-forward`
 ```bash
-kubectl port-forward svc/my-argo-cd-argocd-server NODE-PORT:80 --address 0.0.0.0
+kubectl port-forward svc/my-argo-cd-argocd-server 30304:80 --address 0.0.0.0
 ```
 
 * Get ArgoCD credentials
